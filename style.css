@@ -1,0 +1,143 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.header{
+    width: 100vw;
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 2px solid orange;
+    background-color: rgb(255, 252, 247);
+}
+.divleftHeader{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.divleftHeader h2{
+    margin-right: 35px;
+}
+nav{
+    height: 100%;
+    width: 40%;
+    display: flex;
+   justify-content: center;
+   align-items: center;
+}
+nav ul{
+    list-style: none;
+    width: 100%;
+    display: flex;
+}
+nav ul li{
+    margin: 10px;
+}
+nav ul li a{
+    text-decoration: none;
+    color:black;
+    font-size: 1.5rem;
+}
+nav ul li a:hover{
+    color:orange
+}
+.divBusqueda input{
+    padding: 10px;
+    border-radius: 4%;
+    background-color: rgb(250, 250, 184);
+}
+.divBusqueda input::placeholder{
+    font-size: 1.3rem;
+}
+.sectionPrincipal{
+    width: 100vw;
+    height: 500px;
+    background-image: url(https://cloudfront-us-east-1.images.arcpublishing.com/infobae/OD5F5E6ZKJADPCSGDKQHCM323E.jpg);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+.sectionPrincipal h1{
+    color:white;
+    margin-bottom: 30px;
+    font-size: 2.3rem;
+}
+.sectionInfo{
+    width: 85vw;
+    margin: 0px auto;
+    height: 450px;
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+    grid-template-rows: 100%;
+}
+.divInfoItem{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.divInfoItem img{
+    width: 90%;
+    height: 50%;
+}
+.divInfoItem p{
+    font-size: 1.2rem;
+    color: #c4c4c4;
+}
+.divInfoItem p strong{
+    color:black
+}
+.sectionCriptoComprar{
+    width: 100vw;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+}
+.sectionCriptoComprar .divCriptoItem{
+    margin: 15px;
+    width: 280px;
+    height: 90%;
+    border-radius: 4%;
+    display: grid;
+    grid-template-rows: 45% 55%;
+    grid-template-columns: 100%;
+    background-color: #c4c4c4;
+}
+.divCriptoItem img{
+    width: 70%;
+    height: 70%;
+    margin-left: 35px;
+    margin-top: 30px;
+}
+.divCriptoItem  .divInfoCriptoItem{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.divInfoCriptoItem h2{
+    font-size: 1.5rem;
+}
+.divInfoCriptoItem p{
+    font-size: 1.2rem;
+    padding-left: 10px;
+}
+.divInfoCriptoItem a{
+    width: fit-content;
+    text-decoration: none;
+    color:white;
+    padding: 10px;
+    border-radius: 20%;
+    background-color: rgb(8, 153, 8);
+    font-size: 1.1rem;
+}
