@@ -47,12 +47,45 @@ nav ul li a:hover{
 }
 .divBusqueda input{
     padding: 10px;
-    border-radius: 4%;
+    border: none;
+    outline: none;
+    border: 1px outset orange;
+    color:rgb(192, 144, 55);
     background-color: rgb(250, 250, 184);
+    width: 240px;
+    height: 40px;
+    font-size: 1.2rem;
 }
 .divBusqueda input::placeholder{
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    text-shadow: #c4c4c4;
 }
+/*footer */
+footer{
+    width: 95vw;
+    height: 600px;
+    display: grid;
+    grid-template-rows: 65% 35%;
+    grid-template-columns: 100%
+}
+footer .divTop{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3,28%);
+    grid-template-rows: 100%;
+}
+footer .divTop .divItemFooter{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.divItemFooter h2{
+    margin-top: 25px;
+    font-size: 1.2rem;
+}
+
 .sectionPrincipal{
     width: 100vw;
     height: 500px;
@@ -140,4 +173,54 @@ nav ul li a:hover{
     border-radius: 20%;
     background-color: rgb(8, 153, 8);
     font-size: 1.1rem;
+}
+/*compras */
+.sectionContainer{
+    width: 85vw;
+    height: 400px;
+    margin: 30px auto 0px auto;
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+    grid-template-rows: repeat(2,100%);
+    gap: 20px;
+}
+.divComprasCripto{
+    width: 100%;
+    height: 100%;
+    border-radius: 5%;
+    border: 3px solid green;
+    background-color: rgb(43, 43, 43);
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(4,25%);
+}
+.divCriptoItem{
+    border-top: 1px solid #c4c4c4;
+    border-radius: 7%;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 20% 60%;
+    grid-template-rows: 100%;
+}
+.divCriptoItem img{
+    align-self: center;
+    width: 60%;
+    height: 70%;
+    border-radius: 50%;
+    margin-bottom: 30px;
+}
+.divCriptoItem .contenidoCripto h2{
+    margin-top: 25px;
+    color: white;
+    font-size: 1.2rem;
+}
+.divCriptoItem .contenidoCripto a{
+    color: rgb(221, 221, 221);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+.divCriptoItem .contenidoCripto a:hover{
+    color: rgb(204, 245, 181);
+    font-size: 0.9rem;
 }
