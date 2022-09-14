@@ -5,8 +5,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cotizacion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Lato:wght@100&family=Roboto+Condensed:ital,wght@1,300&family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header class="header">
+        <div class="divleftHeader">
+            <h2>DevanCoin</h2>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#">Home</a>
+                </li>
+                <li>
+                    <a href="#">Cotizar</a>
+                </li>
+                <li>
+                    <a href="#">Comprar</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="divBusqueda">
+            <input type="search" name="buscar" id="bsuquedaInput" placeholder="Buscar">
+        </div>
+    </header>
+    <main class="mainCotizacion">
+        <section class="conteinerCambio">
+            <div class="DivConversor">
+                <form>
+                    <label for="inputText1">Selecciona la catidad de USD que quieras convertir</label>
+                    <input type="number" name="inputText1" id="inputText" placeholder="Monto en USD">       
+                        <select  id="selectCripto">
+                            <option value="2700" name="Bitcoin">Bitcoin</option>
+                            <option value="300" name="Bitcoin">Lemon Cash</option>
+                            <option value="1" name="Bitcoin">Cardano</option>
+                            <option value="1.1" name="Dogecoin">Dogecoin</option>
+                        </select>
+                    </form>
+                    <button >Enviar Datos</button>
+            </div>
+            <div class="divResultadoCotizacion">
     
+            </div>
+        </section>
+    </main>
+    <script src="appDOM.js"></script>
 </body>
 </html>
