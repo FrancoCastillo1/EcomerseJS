@@ -182,49 +182,51 @@ footer .divTop .divItemFooter{
     height: 400px;
     margin: 30px auto 0px auto;
     display: grid;
-    grid-template-columns: repeat(2,50%);
-    grid-template-rows: repeat(2,100%);
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(3,100%);
     gap: 20px;
 }
-.divComprasCripto{
-    width: 100%;
-    height: 100%;
-    border-radius: 5%;
-    border: 3px solid green;
-    background-color: rgb(43, 43, 43);
+.mainCompras{
     display: grid;
+    height: 100vw;
+    width: 100vw;
+    grid-template-rows: 10% 70% 20%;
     grid-template-columns: 100%;
-    grid-template-rows: repeat(4,25%);
 }
-.divCriptoItem{
-    border-top: 1px solid #c4c4c4;
-    border-radius: 7%;
-    width: 100%;
+.sectionContainer{
+    margin: 20px auto;
+    width: 85%;
     height: 100%;
     display: grid;
-    grid-template-columns: 20% 60%;
-    grid-template-rows: 100%;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(3,100%);
+    gap: 25px;
 }
-.divCriptoItem img{
-    align-self: center;
-    width: 60%;
-    height: 70%;
-    border-radius: 50%;
-    margin-bottom: 30px;
+.contenidoNFT{
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
-.divCriptoItem .contenidoCripto h2{
-    margin-top: 25px;
-    color: white;
+#buscarCompras{
+    margin-top: 30px;
+    margin-left: 500px;
+    width: 280px;
+    height: 60px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border: 1px outset #d99d02;
     font-size: 1.2rem;
+    color:rgb(255, 227, 68);
+    background-color: #fff6dd;
 }
-.divCriptoItem .contenidoCripto a{
-    color: rgb(221, 221, 221);
-    text-decoration: none;
-    font-size: 0.9rem;
-}
-.divCriptoItem .contenidoCripto a:hover{
-    color: rgb(204, 245, 181);
-    font-size: 0.9rem;
+.encontrado{
+    color:#c89900;
+    font-size: 1.6rem;
 }
 /*cotizacion */
 .mainCotizacion{
@@ -286,6 +288,3 @@ footer .divTop .divItemFooter{
     font-size: 1.8rem;
     font-weight: bolder;
 }
-/* .divResultadoCotizacion h3:first-child{
-    margin-top: 20px;
-} */

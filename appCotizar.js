@@ -29,20 +29,3 @@ let resultado = document.querySelector("button");
           }
     })
 
-                    //Filtrar cripto
-const filtrar = document.querySelector("#buscarCotizar");
-const acceder = document.querySelector(".sectionContainer");
-const accederPersonalmente = document.querySelectorAll(".divCriptoItem")
-filtrar.addEventListener("keydown" , () =>{
-    /* acceder.innerHTML ="";
-    if(filtrar.value === accederPersonalmente){
-        acceder.innerHTML =`${accederPersonalmente}
-        <h3>¿Es esto lo que buscabas?</h3>
-        `
-    }else{
-        acceder.innerHTML =`<h3>No se encontraron critpos para mostrar la gráfica ,asegurate de que hayas escrito bien</h3>
-        `
-    } */
-    console.log("so")
-})
-
