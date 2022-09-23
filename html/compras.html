@@ -8,7 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Lato:wght@100&family=Roboto+Condensed:ital,wght@1,300&family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.8.0/sweetalert2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <header class="header">
@@ -18,10 +19,10 @@
         <nav>
             <ul>
                 <li>
-                    <a href="#">Home</a>
+                    <a href="../index.html">Home</a>
                 </li>
                 <li>
-                    <a href="#">Cotizar</a>
+                    <a href="./cotizaciónCripto.html">Cotizar</a>
                 </li>
                 <li>
                     <a href="#">Comprar</a>
@@ -31,15 +32,23 @@
         <div class="divBusqueda">
             <input type="search" name="buscar" id="bsuquedaInput" placeholder="Buscar">
         </div>
+        <div class="carritoCompra">
+            <button id="carrito">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </button>
+        </div>
     </header>
     <main class="mainCompras">
-        <input type="search" name="buscarCotizar" id="buscarCompras">
+        <input type="search" name="buscarCotizar" id="buscarCompras" placeholder="Busca tu NFT">
         <section class="sectionContainer">
 
         </section>
         <section class="loComprado">
+
         </section>
     </main>
-    <script src="appCompra.js"></script>
+    <script src="https://kit.fontawesome.com/27a566e2ce.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/appCompra.js"></script>
 </body>
 </html>

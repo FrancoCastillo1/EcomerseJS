@@ -62,6 +62,26 @@ nav ul li a:hover{
     font-size: 1.2rem;
     text-shadow: #c4c4c4;
 }
+.compraInput{
+    margin-right: 15px;
+}
+.carritoCompra{
+    height: 100%;
+    width: 140px;
+}
+.carritoCompra button{
+    /* border: none;
+    outline: none; */
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+.carritoCompra button i{
+    color:white;
+    font-size: 1.4rem;
+    position: absolute;
+    z-index: 1111;
+}
 /*footer */
 footer{
     width: 95vw;
@@ -177,29 +197,17 @@ footer .divTop .divItemFooter{
     font-size: 1.1rem;
 }
 /*compras */
-.sectionContainer{
-    width: 85vw;
-    height: 400px;
-    margin: 30px auto 0px auto;
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    grid-template-rows: repeat(3,100%);
-    gap: 20px;
-}
-.mainCompras{
-    display: grid;
-    height: 100vw;
-    width: 100vw;
-    grid-template-rows: 10% 70% 20%;
-    grid-template-columns: 100%;
-}
+/* .mainCompras{
+    display: flex;
+    flex-direction: column;
+} */
 .sectionContainer{
     margin: 20px auto;
     width: 85%;
-    height: 100%;
+    height: auto;
     display: grid;
     grid-template-columns: repeat(4,1fr);
-    grid-template-rows: repeat(3,100%);
+    grid-template-rows: repeat(3,320px);
     gap: 25px;
 }
 .contenidoNFT{
@@ -215,7 +223,7 @@ footer .divTop .divItemFooter{
     margin-top: 30px;
     margin-left: 500px;
     width: 280px;
-    height: 60px;
+    height: 100%;
     padding: 10px;
     border: none;
     outline: none;
@@ -228,6 +236,103 @@ footer .divTop .divItemFooter{
     color:#c89900;
     font-size: 1.6rem;
 }
+.carritoCompra{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+}
+.carritoCompra button{
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(14, 168, 14);
+}
+.carritoCompra button i{
+    color: white;
+    font-size: 1.7rem;
+}
+.subContainer{
+    background-color: rgb(85, 156, 85);
+    width: 100vw;
+    height: auto;
+    right: 0;
+    position: absolute;
+    top: 85px;
+    display: grid;
+    grid-template-columns: 70% 20%;
+    grid-template-rows: 100%;
+    justify-content: space-between;
+}
+.infoDiv{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.subContainer .infoDiv p{
+    margin: 7px;
+    padding: 8px;
+    width: 90%;
+    font-size: 1.2rem;
+    color:white;
+    background-color: rgb(39, 39, 39);
+    border: 1px solid white;
+}
+/* .subContainer .infoDiv h2{
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 1.7rem;
+    color:white
+} */
+.conteinerBottom{
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: flex-end;
+}
+.conteinerBottom .bottonCerrar:first-child{
+    height: 40px;
+    width: 40px;
+    padding:5px;
+    border: none;
+    outline: none;
+    border-radius: 5%;
+    margin-top: 10px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:red ;
+}
+.conteinerBottom .bottonCerrar .fa-xmark{
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    font-size: 2.2rem;
+    color: white;
+}
+.buttonContainer{
+    width: 80%;
+    height: 40%;
+}
+.buttonContainer button{
+    width: 90%;
+    height:45px;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    padding: 6px;
+    border-radius: 4%;
+    background-color:green;
+    color:white
+}
+
 /*cotizacion */
 .mainCotizacion{
     background-color: #c89900;

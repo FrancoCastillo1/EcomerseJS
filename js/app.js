@@ -123,5 +123,5 @@ alert(`Este fue le resultado de tu tu consulta ${datosUsuario.join(", ")} `); */
 
 const convertirJson = JSON.stringify(objJson) // con esto pasamos el objeto a formato JSON
 const localStore = localStorage.setItem("persona" , convertirJson)  como el localStore solo acepta claves y valores ,creamos una clave y anidamos el Json qu convertirmos recien */ 
-const recuperar = localStorage.getItem("persona") // con getItem nos fijamos si esta
-console.log(JSON.stringify(recuperar)) // lo convertimos a JSON porque en caso que sea un obeto , lo pasamos
+/* const recuperar = localStorage.getItem("persona") */ // con getItem nos fijamos si esta
+/* console.log(JSON.stringify(recuperar))  */// lo convertimos a JSON porque en caso que sea un obeto , lo pasamos
