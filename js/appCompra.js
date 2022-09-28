@@ -78,40 +78,41 @@ const productos =[
     },
 ]
 //hago el forEach para dibujar
-
+let dibujar;
 const buscar = document.querySelector("#buscarCompras");
 const arrayForEach =() =>{
     productos.forEach((producto) =>{
-       sectionNFT.innerHTML += `
+    dibujar = sectionNFT.innerHTML += `
        <div class ="contenidoNFT">
        <img src "${producto.imagen}" alt "NFT , Hacerse millonario , Cripto">
        <h2> ${producto.nombre}</h2>
        <button class="comprarNFT" value ="${producto.precio}">Comprar</button>
        </div>
        `
+
    }) 
 }
+let filter;
 arrayForEach()    
 buscar.addEventListener("keyup" , () =>{
     productos.filter((producto)=>{
         if(buscar.value == producto.nombre){
-            console.log(producto.nombre.parentEl)
-            const filtradoementArray = {
+            const filtradoArray = {
                 id:"filtrado",
                 nombre:producto.nombre,
                 imagen: producto.imagen,
                 precio:producto.precio
             }
-            productos.push(filtradoArray);
-            arrayForEach()  
-            arrayModicar()
+            productos.push(filtradoArray);  
             sectionNFT.innerHTML = `
             <div class ="contenidoNFT">
             <img src "${filtradoArray.imagen}" alt "NFT , Hacerse millonario , Cripto">
             <h2> ${filtradoArray.nombre}</h2>
-            <button class="comprarNFT" value ="${filtradoArray.precio}">Comprar</button>
+            <button class="for for" value ="${filtradoArray.precio}">Comprar</button>
             </div>
             `
+            const newArrayIterable  = document.querySelectorAll(".for") // ¿por que pongo 2 clases,  bueno , porque el swwtAlert estaba con un forEach , de array y para que me lo reconozca , puse 2)
+            arrayModicar(newArrayIterable)
         }
       }) 
     
@@ -119,7 +120,6 @@ buscar.addEventListener("keyup" , () =>{
 mainNFT.appendChild(sectionNFT)
 // hago que el usuario confirme la compra y creo un array para pushear los totales
 let arrayPusheado = []
-let filtrado =[]
 const confirmar = document.querySelectorAll(".comprarNFT");
 const comprado = document.querySelector(".loComprado")
 const botton = document.querySelector("#carrito");
@@ -133,8 +133,8 @@ const divComprasContainer = document.querySelector(".carritoCompra")
 let newDivCompras = document.createElement("DIV")
 newDivCompras.classList.add("subContainer")
 // no se porqque no me funciona con el mismo query en filtrar el swwet Alert,por eso utiliza una funcion
-const arrayModicar =  () =>{
-    confirmar.forEach((pendiente) =>{
+const arrayModicar =  (recorrido) =>{
+    recorrido.forEach((pendiente) =>{
         pendiente.addEventListener("click" , () =>{
             Swal.fire({
                 title:  `Compra del NFT ${pendiente.previousElementSibling.textContent}`,
@@ -165,7 +165,7 @@ const arrayModicar =  () =>{
     } 
     )
 }
-arrayModicar()
+arrayModicar(confirmar)
 // creo esta constante para que sea de lectura global
 //creo DIVS para utilizarlos
 const divContainerBottons = document.createElement("div");
@@ -182,8 +182,12 @@ const llenaElCarro = ( contenido) =>{
     })
 }
 // creo la funcion para ver en caso quu el usuario desee vaciar el carrito
+const vaciarCarroDefinitivo = () =>{
+    divContainerText.innerHTML = ""
+    arrayPusheado.splice(0,arrayPusheado.length)
+}
 const eventoClick = () =>{
-    divContainerText.innerHTML != ""?divContainerText.innerHTML ="":llenaElCarro( "El carro ya está vacio, ¿para que lo quieres vaciar?")
+    divContainerText.innerHTML != ""?vaciarCarroDefinitivo() ="":llenaElCarro( "El carro ya está vacio, ¿para que lo quieres vaciar?")
 }
 //funcion para el evento click cerrar
 const eventoClickCerrar = () =>{
@@ -208,9 +212,12 @@ const mostrarAlerta= () =>{
         confirmButtonText: 'Aceptar'
          }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                'Gracias por Comprar en DevanCoin',
-                `El total de su compra fue $US${total},vuelva pronto! `
+                Swal.fire({
+                icon : "success",
+                  padding : "1rem",
+                  title : 'Gracias por Comprar en DevanCoin',
+                   text:  `El total de su compra fue $US${total},vuelva pronto! `
+                }
                 )
                 }
             arrayPusheado.splice(0,arrayPusheado.length)
@@ -224,22 +231,21 @@ const botonUser = divContainerBottons.innerHTML =`
 <button onclick="eventoClickCerrar()"class="bottonCerrar"><i class="fa-solid fa-xmark"></i></button>
 <div class="buttonContainer">
 <button id="vaciarCarrito" onclick ="eventoClick()">Vaciar Carrito</button>
-<button class="comprar" onclick="mostrarAlerta()">Comprar</button>
+<button class="comprar" onclick="totalCompra()">Comprar</button>
 </div>
 `
 //hago que si el boton es click pase esto
 const dibujarCarro = () =>{
     botton.addEventListener("click" , () =>{
-       arrayPusheado.forEach((pendiente) =>{
-        if(filtrado){ // no  me muestra el indice que sea -1
+        let ultimo = arrayPusheado[arrayPusheado.length -1]
+        if(ultimo){
             divContainerText.innerHTML+= `
-            <p>Nombre ${pendiente.nombre} precio US$${pendiente.precio}<i class="fa-solid fa-xmark eliminarProducto"></p>
-        `
+            <p>Nombre ${ultimo.nombre} precio US$${ultimo.precio}<i class="fa-solid fa-xmark eliminarProducto"></p>
+            `
         }
-        })
         newDivCompras.appendChild(divContainerText);
         newDivCompras.appendChild(divContainerBottons)
         divComprasContainer.appendChild(newDivCompras)
     })
 }
-// extrago los botones para hacer eventso con ellos
+dibujarCarro()

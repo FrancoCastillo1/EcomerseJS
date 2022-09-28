@@ -125,3 +125,27 @@ const convertirJson = JSON.stringify(objJson) // con esto pasamos el objeto a fo
 const localStore = localStorage.setItem("persona" , convertirJson)  como el localStore solo acepta claves y valores ,creamos una clave y anidamos el Json qu convertirmos recien */ 
 /* const recuperar = localStorage.getItem("persona") */ // con getItem nos fijamos si esta
 /* console.log(JSON.stringify(recuperar))  */// lo convertimos a JSON porque en caso que sea un obeto , lo pasamos
+
+
+// ejercicios coder
+let productos = [
+  {id:1 , nombre:"Licuadora" , precio:233 },
+  {id:2 , nombre:"Remera" , precio:4545 },
+  {id:3 , nombre:"Pantalón" , precio:566 },
+]
+let promesa;
+const filtrado  = (param) =>{
+  setTimeout(() =>{ 
+    promesa = productos.find((para) =>para.nombre == param)
+  },3000)
+  return new Promise((resolve, reject) => {
+    if(promesa){
+      resolve(console.log("El " + param + "existe en la base de datos")) 
+    }else{
+      reject(console.log("El nombre no existe la base de datos,por favor ingrese otro"))
+    }
+  })
+}
+filtrado("jssd")
+        .then((prod) => console.log(prod))
+        .catch((prod) => console.log(prod))
