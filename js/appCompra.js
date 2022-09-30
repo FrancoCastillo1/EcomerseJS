@@ -6,74 +6,74 @@ const mainNFT = document.querySelector(".mainCompras")
 const productos =[
     {
         id :1,
-        nombre :"NFT  Devan",
-        imagen: "https://s2.coinmarketcap.com/static/img/coins/200x200/1.png",
+        nombre :"NFT Devan",
+        imagen: "../img/img1.jpg",
         precio : 1000,
     },
     {
         id :2,
-        nombre : "Lemon",
-        imagen :"https://cdn-images-1.medium.com/max/1200/1*5ts4IXY1bvm1Fd3YJgSePg.png",
+        nombre : "NFT GOOMBA",
+        imagen :"../IMG/img2.jfif",
         precio : 3785,
     },
     {
         id :3,
-        nombre : "Cardano",
-        imagen :"https://cdn-images-1.medium.com/max/1200/1*5ts4IXY1bvm",
+        nombre : "NFT ROBOT XD",
+        imagen :"../img/img3.webp",
         precio : 84,
     },
     {
         id :4,
-        nombre : "Dogecoin",
-        imagen :"https://cdn-images-1.medium.com/max/1200/1*5ts4IXY1bvm",
+        nombre : "NFT ¿ROBOT???",
+        imagen :"../img/img4.webp",
         precio : 5643,
     },
     {
         id :5,
-        nombre : "Etherium",
-        imagen :"https://cdn-images-1.medium.com/max/1200/1*5ts4IXY1bvm",
+        nombre : "NFT MICHAEL JORDAN",
+        imagen :"../img/IMG5.jfif",
         precio : 4243,
     },
     {
         id :6,
-        nombre : "Polkadot",
-        imagen :"https://cdn-images-1.medium.com/max/1200/1*5ts4IXY1bvm",
+        nombre : "NFT LeBron James",
+        imagen :"../img/IMG6.jfif",
         precio : 3453,
     },
     {
         id :7,
-        nombre : "USD COIN",
-        imagen :"https://cdn-images-1.medium.com/max/1200/1*5ts4IXY1bvm",
+        nombre : "NFT ROCKY",
+        imagen :"../img/img7.jpg",
         precio: 364,
     },
     {
         id :8,
-        nombre : "Devan Coin",
-        imagen :"https://cdn-images-1.medium.com/max/1200/1*5ts4IXY1bvm",
+        nombre : "NFT CHUCK NORRIS",
+        imagen :"../img/img8.jfif",
         precio : 334,
     },
     {
         id :9,
-        nombre : "DAI",
-        imagen :"https://cdn-images-1.medium.com/max/1200/1*5ts4IXY1bvm",
+        nombre : "NFT BRUCE LEE",
+        imagen :"../img/img9.jfif",
         precio : 3424,
     },
     {
         id :10,
-        nombre : "Etherium",
-        imagen :"https://cdn-images-1.medium.com/max/1200/1*5ts4IXY1bvm",
+        nombre : "NFT FERNAN",
+        imagen :"../img/img10.webp",
         precio : 3424,
     },
     {
         id :11,
-        nombre : "Tather",
-        imagen :"https://cdn-images-1.medium.com/max/1200/1*5ts4IXY1bvm",
+        nombre : "NFT MESSI",
+        imagen :"../img/img11jpg.jpg",
         precio : 800,
     },
     {
         id :12,
-        nombre : "ArgentinaCoin",
-        imagen :"https://cdn-images-1.medium.com/max/1200/1*5ts4IXY1bvm",
+        nombre : "NFT ROBOT RARO",
+        imagen :"../img/img12.webp",
         precio : 300,
     },
 ]
@@ -84,7 +84,7 @@ const arrayForEach =() =>{
     productos.forEach((producto) =>{
     dibujar = sectionNFT.innerHTML += `
        <div class ="contenidoNFT">
-       <img src "${producto.imagen}" alt "NFT , Hacerse millonario , Cripto">
+       <img src="${producto.imagen}" alt="NFT , Hacerse millonario , Cripto">
        <h2> ${producto.nombre}</h2>
        <button class="comprarNFT" value ="${producto.precio}">Comprar</button>
        </div>
@@ -97,7 +97,7 @@ arrayForEach()
 buscar.addEventListener("keyup" , () =>{
     productos.filter((producto)=>{
         if(buscar.value == producto.nombre){
-            const filtradoArray = {
+             const filtradoArray = {
                 id:"filtrado",
                 nombre:producto.nombre,
                 imagen: producto.imagen,
@@ -106,7 +106,7 @@ buscar.addEventListener("keyup" , () =>{
             productos.push(filtradoArray);  
             sectionNFT.innerHTML = `
             <div class ="contenidoNFT">
-            <img src "${filtradoArray.imagen}" alt "NFT , Hacerse millonario , Cripto">
+            <img src="${filtradoArray.imagen}" alt="NFT , Hacerse millonario , Cripto">
             <h2> ${filtradoArray.nombre}</h2>
             <button class="for for" value ="${filtradoArray.precio}">Comprar</button>
             </div>
@@ -137,7 +137,7 @@ const arrayModicar =  (recorrido) =>{
     recorrido.forEach((pendiente) =>{
         pendiente.addEventListener("click" , () =>{
             Swal.fire({
-                title:  `Compra del NFT ${pendiente.previousElementSibling.textContent}`,
+                title:  `Compra del ${pendiente.previousElementSibling.textContent}`,
                 text: `Estas a punto de agregar al carrito un NFT valorado en US$${pendiente.value}, precionar Aceptar para agregar al carrito`,
                 icon: 'question',
                 showCancelButton: true,
@@ -221,6 +221,7 @@ const mostrarAlerta= () =>{
                 )
                 }
             arrayPusheado.splice(0,arrayPusheado.length)
+            divContainerText.innerHTML = ""
     })
 }
 const totalCompra =() =>{
