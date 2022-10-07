@@ -1,0 +1,74 @@
+[
+    {
+        "id" :1,
+        "nombre" :"NFT Devan",
+        "imagen": "../img/img1.jpg",
+        "precio" : 1000
+    },
+    {
+        "id" :2,
+        "nombre" :"NFT GOOMBA",
+        "imagen" :"../IMG/img2.jfif",
+        "precio" : 3785
+    },
+    {
+        "id" :3,
+        "nombre" : "NFT ROBOT XD",
+        "imagen" :"../img/img3.webp",
+        "precio" : 84
+    },
+    {
+        "id" :4,
+        "nombre" : "NFT ¿ROBOT???",
+        "imagen" :"../img/img4.webp",
+        "precio" : 5643
+    },
+    {
+        "id" :5,
+        "nombre" : "NFT MICHAEL JORDAN",
+        "imagen" :"../img/IMG5.jfif",
+        "precio" : 4243
+    },
+    {
+        "id" :6,
+        "nombre" :"NFT LeBron James",
+        "imagen" :"../img/IMG6.jfif",
+        "precio" : 3453
+    },
+    {
+        "id" :7,
+        "nombre" :"NFT ROCKY",
+        "imagen" :"../img/img7.jpg",
+        "precio": 364
+    },
+    {
+        "id" :8,
+        "nombre" :"NFT CHUCK NORRIS",
+        "imagen" :"../img/img8.jfif",
+        "precio" : 334
+    },
+    {
+        "id" :9,
+        "nombre" : "NFT BRUCE LEE",
+        "imagen" :"../img/img9.jfif",
+        "precio" : 3424
+    },
+    {
+        "id" :10,
+        "nombre" :"NFT FERNAN",
+        "imagen" :"../img/img10.webp",
+        "precio" : 3424
+    },
+    {
+        "id" :11,
+        "nombre" :"NFT MESSI",
+        "imagen" :"../img/img11jpg.jpg",
+        "precio" : 800
+    },
+    {
+        "id" :12,
+        "nombre" :"NFT ROBOT RARO",
+        "imagen" :"../img/img12.webp",
+        "precio" : 300
+    }
+]

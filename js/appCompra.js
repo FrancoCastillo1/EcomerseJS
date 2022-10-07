@@ -1,9 +1,58 @@
-/* import Swal from 'sweetalert2/dist/sweetalert2.js' */
 //extraigo a los documentos
 const sectionNFT = document.querySelector(".sectionContainer")
 const mainNFT = document.querySelector(".mainCompras")
+//preguntamos el nombre del usuario al ingresar a esta parte de la página, digamos que las otras partes son puramente informativas
+let saldo;
+let nombre;
+let tarjetaUsuario;
+//hago una funcion donde "registre al usuario" para que pueda rellenar usus datos paar la compra
+const datos = () =>{
+    Swal.mixin({
+     input : "text",
+     confirmButtonText : "Siguinete Pregunta",
+     progressSteps : ["1" , "2"],
+     showCancelButton:true
+    }).queue([
+         {
+             title:"Introduce tu nombre",
+             text:"El nombre nos asegura que seas vos el que este comprando"
+         },
+         {
+             title:"Ingrese su tarjeta de crédito",
+             text:"No compartiremos la información con nadie"
+         },
+    ]).then((result) =>{
+     if(result.value){
+          tarjetaUsuario = result.value[1]
+         nombre = result.value[0]
+         saldo = Math.round(Math.random()*10000)
+         if((tarjetaUsuario.length >=14 && tarjetaUsuario.length <=16) &&(nombre != "")){
+             Swal.fire({
+                 title : "Completado",
+                 html:`<p>Gracias ${nombre} , su saldo actual de la tarjeta ${tarjetaUsuario} es de US$${saldo}</p>`,
+                 confirmButtonText:"Terminado",
+             })
+             localStorage.setItem("Usuario" ,nombre)
+             ejecucionBucle = false
+         }else{
+             Swal.fire({
+                 title : "Dato de la tarjeta invalido",
+                 html:`<p> ${nombre} , su tarjeta ${tarjetaUsuario} es ivalida ,presione "Rehacer" para volver a llenar el formulario`,
+                 confirmButtonText:"Rehacer",
+                 showCancelButton:true
+             }).then((recarga) =>{
+                recarga && location.reload()
+             })
+         }
+     }
+    })
+}
+//la función se ejecutará apenas inicie la página
+document.addEventListener("DOMContentLoaded" , () =>{
+datos()
+})
 // creo el array de objetos para el HTML
-const productos =[
+/* const productos =[
     {
         id :1,
         nombre :"NFT Devan",
@@ -12,7 +61,7 @@ const productos =[
     },
     {
         id :2,
-        nombre : "NFT GOOMBA",
+        nombre :"NFT GOOMBA",
         imagen :"../IMG/img2.jfif",
         precio : 3785,
     },
@@ -36,19 +85,19 @@ const productos =[
     },
     {
         id :6,
-        nombre : "NFT LeBron James",
+        nombre :"NFT LeBron James",
         imagen :"../img/IMG6.jfif",
         precio : 3453,
     },
     {
         id :7,
-        nombre : "NFT ROCKY",
+        nombre :"NFT ROCKY",
         imagen :"../img/img7.jpg",
         precio: 364,
     },
     {
         id :8,
-        nombre : "NFT CHUCK NORRIS",
+        nombre :"NFT CHUCK NORRIS",
         imagen :"../img/img8.jfif",
         precio : 334,
     },
@@ -60,110 +109,152 @@ const productos =[
     },
     {
         id :10,
-        nombre : "NFT FERNAN",
+        nombre :"NFT FERNAN",
         imagen :"../img/img10.webp",
         precio : 3424,
     },
     {
         id :11,
-        nombre : "NFT MESSI",
+        nombre :"NFT MESSI",
         imagen :"../img/img11jpg.jpg",
         precio : 800,
     },
     {
         id :12,
-        nombre : "NFT ROBOT RARO",
+        nombre :"NFT ROBOT RARO",
         imagen :"../img/img12.webp",
         precio : 300,
     },
-]
+] */
 //hago el forEach para dibujar
 let dibujar;
 const buscar = document.querySelector("#buscarCompras");
-const arrayForEach =() =>{
-    productos.forEach((producto) =>{
-    dibujar = sectionNFT.innerHTML += `
+const arrayForEach =(dibujo) =>{
+   dibujo.forEach((producto) =>{
+     sectionNFT.innerHTML += `
        <div class ="contenidoNFT">
        <img src="${producto.imagen}" alt="NFT , Hacerse millonario , Cripto">
-       <h2> ${producto.nombre}</h2>
+       <h2>${producto.nombre}</h2>
        <button class="comprarNFT" value ="${producto.precio}">Comprar</button>
        </div>
        `
 
    }) 
 }
+//lo llamo desde json
+const llamarProductos = async() =>{
+   const resultado = await fetch("./productos.json")
+   const respuesta = await resultado.json()
+    arrayForEach(respuesta)
+}
+llamarProductos()
 let filter;
-arrayForEach()    
-buscar.addEventListener("keyup" , () =>{
-    productos.filter((producto)=>{
-        if(buscar.value == producto.nombre){
-             const filtradoArray = {
-                id:"filtrado",
-                nombre:producto.nombre,
-                imagen: producto.imagen,
-                precio:producto.precio
-            }
-            productos.push(filtradoArray);  
-            sectionNFT.innerHTML = `
-            <div class ="contenidoNFT">
-            <img src="${filtradoArray.imagen}" alt="NFT , Hacerse millonario , Cripto">
-            <h2> ${filtradoArray.nombre}</h2>
-            <button class="for for" value ="${filtradoArray.precio}">Comprar</button>
-            </div>
-            `
-            const newArrayIterable  = document.querySelectorAll(".for") // ¿por que pongo 2 clases,  bueno , porque el swwtAlert estaba con un forEach , de array y para que me lo reconozca , puse 2)
-            arrayModicar(newArrayIterable)
-        }
-      }) 
-    
-})
+/* arrayForEach(productos)  */   
+//filtrado de palabras
+ const valorcito =buscar.addEventListener("keyup" , () =>{
+   const busqueda = productos.find((producto)=> buscar.value == producto.nombre)
+    sectionNFT.innerHTML = `
+    <div class ="contenidoNFT">
+    <img src="${busqueda.imagen}" alt="NFT , Hacerse millonario , Cripto">
+    <h2>${busqueda.nombre}</h2>
+    <button class="for for" value ="${busqueda.precio}">Comprar</button>
+     </div>
+     `
+    const newArrayIterable  = document.querySelectorAll(".for")  // ¿por que pongo 2 clases,  bueno , porque el swwtAlert estaba con un forEach , de array y para que me lo reconozca , puse 2)
+    arrayModicar(newArrayIterable)
+    if(buscar.value != busqueda.nombre){
+        arrayForEach(productos)
+    }
+    })
 mainNFT.appendChild(sectionNFT)
+//filtrado por rango
+const newDivRange = document.createElement("DIV");
+const sectionInput = document.querySelector(".sectionInput")
+newDivRange.innerHTML = `<input type="range" name="rango" id="rangoInput" min="0" max="5643" value="0">
+<span class="spanRange">0</span>
+`
+const inputRange = document.querySelector("#rangoInput");
+const spanRange = document.getElementsByClassName("spanRange");
+    if(inputRange){
+        inputRange.addEventListener("input" , () =>{
+            if(spanRange){
+                spanRange.textContent = inputRange.value
+            }
+        })
+    }
+sectionInput.appendChild(newDivRange)
 // hago que el usuario confirme la compra y creo un array para pushear los totales
 let arrayPusheado = []
 const confirmar = document.querySelectorAll(".comprarNFT");
 const comprado = document.querySelector(".loComprado")
 const botton = document.querySelector("#carrito");
 
-/* const filter = document.querySelectorAll(".filterComprarNFT")
-const falsoArray = [filter ,"a"] */
-
-// Esto para filtrar
+//creo le carrito de compras
 const main = document.querySelector(".mainCompras");
 const divComprasContainer = document.querySelector(".carritoCompra")
 let newDivCompras = document.createElement("DIV")
 newDivCompras.classList.add("subContainer")
-// no se porqque no me funciona con el mismo query en filtrar el swwet Alert,por eso utiliza una funcion
+//creo el icono de cerrar
+const bottonCerar = document.createElement("button")
+bottonCerar.className = "bottonCerrar"
+bottonCerar.innerHTML = `<i class="fa-solid fa-xmark"></i>`
+bottonCerar.addEventListener("click" , () =>{
+    newDivCompras.outerHTML = ""
+    sectionNFT.style.marginTop = "0px"
+})
+newDivCompras.appendChild(bottonCerar)
+//hago la funcion que realize la compra , la hara si el usario rellenó los datos
 const arrayModicar =  (recorrido) =>{
     recorrido.forEach((pendiente) =>{
-        pendiente.addEventListener("click" , () =>{
-            Swal.fire({
-                title:  `Compra del ${pendiente.previousElementSibling.textContent}`,
-                text: `Estas a punto de agregar al carrito un NFT valorado en US$${pendiente.value}, precionar Aceptar para agregar al carrito`,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: 'green',
-                cancelButtonColor: '#d33',
-                cancelButtonText :"Cancelar",
-                confirmButtonText: 'Aceptar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Operacion exitosa',
-                        `El NFT ${pendiente.previousElementSibling.textContent} fue añadido correctamente`
-                        )
-                    //Guardo los datos ingresados por el usuario en un array de objetos
-                  arrayPusheado.push({
-                        nombre : pendiente.previousElementSibling.textContent ,
-                        precio : Number(pendiente.value)
-                  })
-                    //lo convierto a JSON
-                    let convertirJson = JSON.stringify(arrayPusheado)
-                    localStorage.setItem("Productos" , convertirJson)
-                }
-            })
+       pendiente.addEventListener("click" , () =>{
+        if((nombre !== undefined && nombre != "") && (tarjetaUsuario !== undefined && tarjetaUsuario != "")){
+            const encontrar = productos.find((producto) => producto.nombre == pendiente.previousElementSibling.textContent )
+            console.log(encontrar)
+            if(encontrar){
+                Swal.fire({
+                    title:  `Compra del ${encontrar.nombre}`,
+                    text: `${nombre} estas a punto de agregar al carrito un NFT valorado en US$ ${encontrar.precio}, precionar Aceptar para agregar al carrito.Recordá que tu saldo es de US$${saldo}`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: 'green',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText :"Cancelar",
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Operacion exitosa',
+                            `El NFT ${encontrar.nombre} fue añadido correctamente`
+                            )
+                        //Guardo los datos ingresados por el usuario en un array de objetos
+                      arrayPusheado.push({
+                            nombre : encontrar.nombre ,
+                            precio : Number(encontrar.precio),
+                            imagen : encontrar.imagen
+                      })
+                        //lo convierto a JSON
+                        let convertirJson = JSON.stringify(arrayPusheado)
+                        localStorage.setItem("Productos" , convertirJson)
+                        //lo agrego al carrito
+                        let ultimo = arrayPusheado[arrayPusheado.length -1]
+                        if(ultimo){
+                            divContainerText.innerHTML+= `
+                            <div class="divProducto">
+                            <img src="${ultimo.imagen}" alt"img hacerse millonario , bruh">
+                            <p>Nombre ${ultimo.nombre}</p>
+                            <p>Precio US$${ultimo.precio}</p>
+                            </div>
+                            `
+                          newDivCompras.appendChild(divContainerText);
+                        }
+                    }
+                })
+            }
+        }else{
+            datos()
+        }
         })    
-    } 
-    )
+    })
 }
 arrayModicar(confirmar)
 // creo esta constante para que sea de lectura global
@@ -173,9 +264,9 @@ divContainerBottons.className = "conteinerBottom"
 const divContainerText = document.createElement("div");
 divContainerText.className ="infoDiv"
 //creo la funcion que el caso que se encuentre vacio:
-const llenaElCarro = ( contenido) =>{
+const errorCompra = (razon , contenido) =>{
     Swal.fire({
-        title:  `El carro está vacío`,
+        title:  razon,
         text: `${contenido}`,
         icon: 'error',
         padding : "1rem"
@@ -186,50 +277,56 @@ const vaciarCarroDefinitivo = () =>{
     divContainerText.innerHTML = ""
     arrayPusheado.splice(0,arrayPusheado.length)
 }
+//esto se ejecutará en caso de que el usuario desee vaciar el carrito
 const eventoClick = () =>{
-    divContainerText.innerHTML != ""?vaciarCarroDefinitivo() ="":llenaElCarro( "El carro ya está vacio, ¿para que lo quieres vaciar?")
+    divContainerText.innerHTML != ""?vaciarCarroDefinitivo() ="":errorCompra("Error al vaciar carrito" ,"El carro ya está vacio, ¿para que lo quieres vaciar?")
 }
-//funcion para el evento click cerrar
-const eventoClickCerrar = () =>{
-    newDivCompras.outerHTML = ""
-}
-// creo 2 funciones , otra para mostrar la alerta de ese TOTAL y otra para hacer la validacion si el carrito esta lleno o no
-const mostrarAlerta= () =>{
-   const newForEach = arrayPusheado.map((pendiente)=>`${pendiente.nombre} con precio de ${pendiente.precio}`)
-    console.log(newForEach)
+// creo la funcion que mostrara la alerta del total y validara si hay suficiente saldo
+const mostrarAlerta= (unos) =>{
+    const newForEach = arrayPusheado.map((pendiente)=>`<br>${pendiente.nombre} con precio de ${pendiente.precio}`)
     const total =  arrayPusheado.reduce((acumm,item)=>{
         return acumm + item.precio
-    },0)  
-    Swal.fire({
-        title : "TOTAL De la Compra",
-        text : `El total de la compra fue de un ${newForEach}`,
-        icon : "info",
-        padding: "1rem",
-        showCancelButton: true,
-         confirmButtonColor: 'green',
-         cancelButtonColor: '#d33',
-        cancelButtonText :"Cancelar",
-        confirmButtonText: 'Aceptar'
-         }).then((result) => {
+    },0)
+    if(saldo >= total){
+      saldo=- total
+        Swal.fire({
+            title : "TOTAL De la Compra",
+            html : `<p>El total de la compra es de ${unos}: ${newForEach}</p>`,
+            icon : "info",
+            padding: "1rem",
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            cancelButtonColor: '#d33',
+            cancelButtonText :"Cancelar",
+            confirmButtonText: 'Aceptar'
+        }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({
-                icon : "success",
-                  padding : "1rem",
-                  title : 'Gracias por Comprar en DevanCoin',
-                   text:  `El total de su compra fue $US${total},vuelva pronto! `
-                }
-                )
-                }
-            arrayPusheado.splice(0,arrayPusheado.length)
-            divContainerText.innerHTML = ""
-    })
+                    icon : "success",
+                      padding : "1rem",
+                      title : 'Gracias por Comprar en DevanCoin',
+                      text:  `El total de su compra fue $US${total},le quedan US$${saldo} en su saldo tras realizar la compra,vuelva pronto! `
+                    }
+                    )
+                    arrayPusheado.splice(0,arrayPusheado.length)
+                    divContainerText.innerHTML = ""
+                    }
+            })
+    }else{
+        errorCompra("Saldo insuficiente" , "su saldo es menor al total de la compra , cargue saldo")
+    }  
+    }
+//¿hay uno o varios?
+const unOrUnos = () =>{
+    arrayPusheado.length>1?mostrarAlerta("unos"):mostrarAlerta("un")
 }
+//aca se termian de calcular el total de la compra
 const totalCompra =() =>{
-    divContainerText.innerHTML?mostrarAlerta():llenaElCarro("No se puede calcular el total si el carrito está vacio ")
+    divContainerText.innerHTML?unOrUnos():errorCompra("Error al comprar" ,"No se puede calcular el total si el carrito está vacio ")
 }
 //empiezo conla estructura HTML
+//creo los botones vaciar y comprar
 const botonUser = divContainerBottons.innerHTML =`
-<button onclick="eventoClickCerrar()"class="bottonCerrar"><i class="fa-solid fa-xmark"></i></button>
 <div class="buttonContainer">
 <button id="vaciarCarrito" onclick ="eventoClick()">Vaciar Carrito</button>
 <button class="comprar" onclick="totalCompra()">Comprar</button>
@@ -238,13 +335,7 @@ const botonUser = divContainerBottons.innerHTML =`
 //hago que si el boton es click pase esto
 const dibujarCarro = () =>{
     botton.addEventListener("click" , () =>{
-        let ultimo = arrayPusheado[arrayPusheado.length -1]
-        if(ultimo){
-            divContainerText.innerHTML+= `
-            <p>Nombre ${ultimo.nombre} precio US$${ultimo.precio}<i class="fa-solid fa-xmark eliminarProducto"></p>
-            `
-        }
-        newDivCompras.appendChild(divContainerText);
+        sectionNFT.style.marginTop = "200px"
         newDivCompras.appendChild(divContainerBottons)
         divComprasContainer.appendChild(newDivCompras)
     })

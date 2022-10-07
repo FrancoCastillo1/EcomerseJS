@@ -15,13 +15,13 @@ const cripto3 = new Cripto("Cardano", 1 , false);
 const cripto4 = new Cripto("Dogecoin", 1.1 , true);
 
 // creo un array de objetos para que funciuone le find , lo que pedia el desafio
-let criptoMonedas = [
+/* let criptoMonedas = [
   { TipoDeCripto: cripto1.nombre, precio: cripto1.precio, disponibilidad: cripto1.disponibilidad },
   {TipoDeCripto: cripto2.nombre, precio: cripto2.precio,  disponibilidad: cripto2.disponibilidad,
   },
   { TipoDeCripto: cripto3.nombre, precio: cripto3.precio, disponibilidad: cripto3.disponibilidad },
   { TipoDeCripto: cripto4.nombre, precio: cripto4.precio, disponibilidad: cripto4.disponibilidad },
-];
+]; */
 /* Sirver para ver si le llego la información al Array */
 console.log(criptoMonedas);
 

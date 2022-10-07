@@ -235,19 +235,25 @@ footer .divTop .divItemFooter{
     margin: 0px auto;
 }
 /*buscador de compras */
-#buscarCompras{
-    margin-top: 30px;
-    margin-left: 500px;
+.sectionInput{
+    width: 90%;
+    margin: 30px auto;
+    display: flex;
+    justify-content: space-around;
+}
+#buscarCompras ,
+#rangoInput{
     width: 280px;
     height: 100%;
     padding: 10px;
     border: none;
     outline: none;
-    border: 1px outset #d99d02;
+    border: 1px outset green;
     font-size: 1.2rem;
-    color:rgb(255, 227, 68);
-    background-color: #fff6dd;
+    color:rgb(10, 90, 10);
+    background-color: #beffbc;
 }
+
 .encontrado{
     color:#c89900;
     font-size: 1.6rem;
@@ -274,14 +280,13 @@ footer .divTop .divItemFooter{
 .subContainer{
     background-color: rgb(85, 156, 85);
     width: 100vw;
-    height: auto;
-    right: 0;
+    min-height: 170px;
+    max-height: auto;
     position: absolute;
+    right: 0;
     top: 85px;
-    display: grid;
-    grid-template-columns: 70% 20%;
-    grid-template-rows: 100%;
-    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
 }
 .infoDiv{
     width: 100%;
@@ -290,44 +295,50 @@ footer .divTop .divItemFooter{
     flex-direction: column;
     align-items: center;
 }
-.subContainer .infoDiv p{
-    margin: 7px;
-    padding: 8px;
-    width: 90%;
+.subContainer .infoDiv .divProducto{
+    margin: 7px auto;
+    height: 75px;
+    width: 85%;
     font-size: 1.2rem;
-    color:white;
-    background-color: rgb(39, 39, 39);
-    border: 1px solid white;
+    color:black;
+    background-color: white;
+    border: 3px solid black;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
-/* .subContainer .infoDiv h2{
-    margin-bottom: 30px;
-    text-align: center;
-    font-size: 1.7rem;
-    color:white
-} */
+.subContainer .infoDiv .divProducto img{
+    height: 80%;
+    width: 80px;
+}
 .conteinerBottom{
-   width: 100%;
-   height: 100%;
+   width: 85%;
+   order:1; /*veamos que pasa-- */
+   margin: 0px auto;
+   justify-self: flex-end;
    display: flex;
    flex-direction: column;
    justify-content: space-between;
-   align-items: flex-end;
+   align-items: center;
+
 }
-.conteinerBottom .bottonCerrar:first-child{
+.bottonCerrar:first-child{
     height: 40px;
     width: 40px;
     padding:5px;
     border: none;
     outline: none;
     border-radius: 5%;
-    margin-top: 10px;
     border: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color:red ;
+    position: absolute; 
+    right: 10px;
+    margin-top: 5px;
 }
-.conteinerBottom .bottonCerrar .fa-xmark{
+ .bottonCerrar .fa-xmark{
     width: 100%;
     height: 100%;
     border: 1px solid black;
@@ -335,14 +346,14 @@ footer .divTop .divItemFooter{
     color: white;
 }
 .buttonContainer{
-    width: 80%;
-    height: 40%;
+    width: 100%;
+    height: 100%;
 }
 .buttonContainer button{
-    width: 90%;
-    height:45px;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
+    width: 100%;
+    height:50px;
+    font-size: 1.2rem;
+    margin-top: 10px;
     padding: 6px;
     border-radius: 4%;
     background-color:green;
