@@ -4,7 +4,11 @@
     box-sizing: border-box;
     font-family: 'Roboto Slab', serif;
 }
+body{
+    overflow-x: hidden;
+}
 .header{
+    width: 100vw;
     height: 100px;
     display: flex;
     justify-content: space-around;
@@ -22,27 +26,27 @@
 .divleftHeader h2{
     margin-right: 35px;
 }
-nav{
+.header nav{
     height: 100%;
     width: 40%;
     display: flex;
    justify-content: center;
    align-items: center;
 }
-nav ul{
+.header nav ul{
     list-style: none;
     width: 100%;
     display: flex;
 }
-nav ul li{
+.header nav ul li{
     margin: 10px;
 }
-nav ul li a{
+.header nav ul li a{
     text-decoration: none;
     color:black;
     font-size: 1.5rem;
 }
-nav ul li a:hover{
+.header nav ul li a:hover{
     color:orange
 }
 .divBusqueda input{
@@ -60,19 +64,76 @@ nav ul li a:hover{
     font-size: 1.2rem;
     text-shadow: #c4c4c4;
 }
-.compraInput{
-    margin-right: 15px;
+/*header compra */
+.headerCompra{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50% 50%;
+    height: 140px;
+    border: 3px outset green;
+}
+.divHeader{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+.divHeader .h2Header{
+    margin-left: 525px;
+    font-size: 2.1rem;
+    color: green;
+}
+.divHeader #usuarioDatos{
+    align-self: flex-start;
+    width: 13%;
+    height: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #cccbcb;
+    border: 2px outset green;
+    cursor: pointer;
+    text-decoration: none;
+    color: #3d3d3d;
+    font-size: 1.2rem;
+}
+.divHeader #usuarioDatos a:first-child{
+    border-right:2px outset green ;
+}
+.headerCompra nav{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.headerCompra nav ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-left: 40px;
+}
+.headerCompra nav ul li a{
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: black;
+    margin:0px 15px;
+}
+.headerCompra nav ul li a:hover{
+    color:green;
 }
 .carritoCompra{
-    height: 100%;
+    margin-bottom: 18px;
+    height: 80px;
     width: 140px;
 }
 .carritoCompra button{
-    /* border: none;
-    outline: none; */
     height: 100%;
     width: 100%;
     position: relative;
+    cursor: pointer;
 }
 .carritoCompra button i{
     color:white;
@@ -83,29 +144,54 @@ nav ul li a:hover{
 /*footer */
 footer{
     width: 95vw;
-    height: 600px;
-    display: grid;
-    grid-template-rows: 65% 35%;
-    grid-template-columns: 100%
-}
-footer .divTop{
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(3,28%);
-    grid-template-rows: 100%;
-}
-footer .divTop .divItemFooter{
-    width: 100%;
-    height: 100%;
+    height: 230px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
-.divItemFooter h2{
-    margin-top: 25px;
-    font-size: 1.2rem;
+footer .divFooter{
+    height: 90%;
+    width: 85%;
+    margin: 0px auto;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 100%;
 }
-
+footer .divFooter img{
+    width: 80%;
+    height: 100%;
+    margin: 0px auto;
+    border-radius: 50%;
+}
+ .divFooter .divInfoAuthorFooter{
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   padding-left: 5px;
+}
+.divFooter .divInfoAuthorFooter p{
+   font-size: 1.4rem;
+ }
+.divInfoAuthorFooter .icons{
+    margin-top: 15px;
+    display: flex;
+    width: 70%;
+    justify-content: space-evenly;
+}
+.divInfoAuthorFooter .icons i{
+    font-size: 2.3rem;
+}
+.fa-instagram{
+    color:rgb(255, 182, 47)
+}
+.fa-facebook{
+    color:rgb(110, 110, 255)
+}
+.fa-twitter{
+    color: rgb(50, 50, 228);
+}
 .sectionPrincipal{
     width: 100vw;
     height: 500px;
@@ -312,15 +398,14 @@ footer .divTop .divItemFooter{
     width: 80px;
 }
 .conteinerBottom{
+    order: 1;
    width: 85%;
-   order:1; /*veamos que pasa-- */
    margin: 0px auto;
    justify-self: flex-end;
    display: flex;
    flex-direction: column;
    justify-content: space-between;
    align-items: center;
-
 }
 .bottonCerrar:first-child{
     height: 40px;
@@ -364,7 +449,8 @@ footer .divTop .divItemFooter{
 .mainCotizacion{
     background-color: #c89900;
     background-image: url("data:image/svg+xml,%3Csvg width='40' height='1' viewBox='0 0 40 1' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v1H0z' fill='%23ffffff' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
-    height: 900px; 
+    height: fit-content; 
+    padding-bottom: 10px;
 }
 .conteinerCambio{
     width: 100vw;
@@ -389,6 +475,9 @@ footer .divTop .divItemFooter{
     justify-content: space-around;
     align-items: center;
 }
+.DivConversor form label{
+    font-size: 1.5rem;
+}
 .DivConversor form input , select ,option{
     height: 50px;
     width: 270px;
@@ -409,14 +498,69 @@ footer .divTop .divItemFooter{
     font-size: 1.3rem;
 }
 .divResultadoCotizacion{
+    margin-top: 100px;
+    width: 88%;
+    background-color: white;
+    border:5px solid #c89900;
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
+    /* align-items: center; */
+    padding: 10px;
     flex-direction: column;
 }
-.divResultadoCotizacion h3{
-    width: 95%;
-    color:rgb(0, 0, 0);
+.divResultadoCotizacion p{
+    font-size: 1.4rem;
+}
+.tabla{
+    height: fit-content;
+    width: 85%;
+    margin: 20px auto;
+}
+.tabla .headerCripto{
+    background-color: blue;
+    color: white;
+    text-align: center;
+    padding: 15px;
     font-size: 1.8rem;
-    font-weight: bolder;
+    border: 3px solid white;
+}
+.tabla .atributosTabla{
+    height: 65px;
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    font-size: 1.5rem;
+    border: 2px solid white;
+    display: grid;
+    grid-template-columns: repeat(3,33%);
+    grid-template-rows: 100%;
+}
+.tabla .atributosTabla div{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tabla .divValores{
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(3,33%);
+}
+.tabla .divValores div{
+    width: 100%;
+    height:60px;
+    background-color: white;
+    font-size: 1.4rem;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tabla .divValores div img{
+    width: 9%;
+    margin-right: 30px;
+    height: 92%;
+    border-radius: 50%;
 }

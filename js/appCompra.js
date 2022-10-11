@@ -5,13 +5,20 @@ const mainNFT = document.querySelector(".mainCompras")
 let saldo;
 let nombre;
 let tarjetaUsuario;
+//hago que el nombre y el saldo que ingresó el usuario aparezca en el html
+const nombreDeUsuario = document.querySelector("#usuarioRegistrado");
+const saldoDelUsuario = document.querySelector("#saldo")
 //hago una funcion donde "registre al usuario" para que pueda rellenar usus datos paar la compra
 const datos = () =>{
     Swal.mixin({
      input : "text",
-     confirmButtonText : "Siguinete Pregunta",
+     confirmButtonText : "Siguiente",
      progressSteps : ["1" , "2"],
-     showCancelButton:true
+     showCancelButton:true,
+     cancelButtonText : "Cancelar",
+     allowEscapeKey:false,
+     allowOutsideClick:false,
+     allowEscapeKey:false,
     }).queue([
          {
              title:"Introduce tu nombre",
@@ -23,8 +30,8 @@ const datos = () =>{
          },
     ]).then((result) =>{
      if(result.value){
-          tarjetaUsuario = result.value[1]
-         nombre = result.value[0]
+        tarjetaUsuario =result.value[1] 
+         nombre =result.value[0]
          saldo = Math.round(Math.random()*10000)
          if((tarjetaUsuario.length >=14 && tarjetaUsuario.length <=16) &&(nombre != "")){
              Swal.fire({
@@ -34,6 +41,8 @@ const datos = () =>{
              })
              localStorage.setItem("Usuario" ,nombre)
              ejecucionBucle = false
+             nombreDeUsuario.textContent = nombre;
+             saldoDelUsuario.textContent = `$US${saldo}`
          }else{
              Swal.fire({
                  title : "Dato de la tarjeta invalido",
@@ -51,8 +60,8 @@ const datos = () =>{
 document.addEventListener("DOMContentLoaded" , () =>{
 datos()
 })
-// creo el array de objetos para el HTML
-/* const productos =[
+// creo el array de objetos para el HTML, no lo hago desde fetch ya que ya lo hice con las cripto y aca se me complicaba mucho =/
+const productos =[
     {
         id :1,
         nombre :"NFT Devan",
@@ -125,7 +134,7 @@ datos()
         imagen :"../img/img12.webp",
         precio : 300,
     },
-] */
+]
 //hago el forEach para dibujar
 let dibujar;
 const buscar = document.querySelector("#buscarCompras");
@@ -142,14 +151,14 @@ const arrayForEach =(dibujo) =>{
    }) 
 }
 //lo llamo desde json
-const llamarProductos = async() =>{
+/* const llamarProductos = async() =>{
    const resultado = await fetch("./productos.json")
    const respuesta = await resultado.json()
     arrayForEach(respuesta)
 }
-llamarProductos()
+llamarProductos() */
 let filter;
-/* arrayForEach(productos)  */   
+ arrayForEach(productos)     
 //filtrado de palabras
  const valorcito =buscar.addEventListener("keyup" , () =>{
    const busqueda = productos.find((producto)=> buscar.value == producto.nombre)
@@ -188,7 +197,9 @@ let arrayPusheado = []
 const confirmar = document.querySelectorAll(".comprarNFT");
 const comprado = document.querySelector(".loComprado")
 const botton = document.querySelector("#carrito");
-
+//creo el div donde estará el añadido del producto
+const divContainerBottons = document.createElement("div");
+divContainerBottons.className = "conteinerBottom"
 //creo le carrito de compras
 const main = document.querySelector(".mainCompras");
 const divComprasContainer = document.querySelector(".carritoCompra")
@@ -203,6 +214,15 @@ bottonCerar.addEventListener("click" , () =>{
     sectionNFT.style.marginTop = "0px"
 })
 newDivCompras.appendChild(bottonCerar)
+//creo la funcion que el caso quese presente cualquier error
+const errorCompra = (razon , contenido) =>{
+    Swal.fire({
+        title:  razon,
+        text: `${contenido}`,
+        icon: 'error',
+        padding : "1rem"
+    })
+}
 //hago la funcion que realize la compra , la hara si el usario rellenó los datos
 const arrayModicar =  (recorrido) =>{
     recorrido.forEach((pendiente) =>{
@@ -251,35 +271,31 @@ const arrayModicar =  (recorrido) =>{
                 })
             }
         }else{
-            datos()
+            errorCompra("No llenaste tus datos", "si quieres comprar NFT asegúrate de llenar los datos en la esquina superior derecha")
         }
         })    
     })
 }
 arrayModicar(confirmar)
-// creo esta constante para que sea de lectura global
+//en caso que el usario haya puesto caneclar , podrá volver a llenar sus datos
+const volverAllenar = () =>{
+        const bottonRegistrarse = document.querySelector("#usuarioDatos")
+        if(bottonRegistrarse){
+            bottonRegistrarse.addEventListener("click", () =>{
+                if((nombreDeUsuario.textContent != nombre) && (saldoDelUsuario.textContent != saldo)){
+                    datos()
+                }
+            })  
+        }
+}
+volverAllenar()
 //creo DIVS para utilizarlos
-const divContainerBottons = document.createElement("div");
-divContainerBottons.className = "conteinerBottom"
 const divContainerText = document.createElement("div");
 divContainerText.className ="infoDiv"
-//creo la funcion que el caso que se encuentre vacio:
-const errorCompra = (razon , contenido) =>{
-    Swal.fire({
-        title:  razon,
-        text: `${contenido}`,
-        icon: 'error',
-        padding : "1rem"
-    })
-}
 // creo la funcion para ver en caso quu el usuario desee vaciar el carrito
 const vaciarCarroDefinitivo = () =>{
     divContainerText.innerHTML = ""
     arrayPusheado.splice(0,arrayPusheado.length)
-}
-//esto se ejecutará en caso de que el usuario desee vaciar el carrito
-const eventoClick = () =>{
-    divContainerText.innerHTML != ""?vaciarCarroDefinitivo() ="":errorCompra("Error al vaciar carrito" ,"El carro ya está vacio, ¿para que lo quieres vaciar?")
 }
 // creo la funcion que mostrara la alerta del total y validara si hay suficiente saldo
 const mostrarAlerta= (unos) =>{
@@ -288,7 +304,8 @@ const mostrarAlerta= (unos) =>{
         return acumm + item.precio
     },0)
     if(saldo >= total){
-      saldo=- total
+      /* const vuelto= saldo - total */
+      saldo= Number(saldo - total)
         Swal.fire({
             title : "TOTAL De la Compra",
             html : `<p>El total de la compra es de ${unos}: ${newForEach}</p>`,
@@ -310,34 +327,45 @@ const mostrarAlerta= (unos) =>{
                     )
                     arrayPusheado.splice(0,arrayPusheado.length)
                     divContainerText.innerHTML = ""
-                    }
+                    saldoDelUsuario.textContent = `$US${saldo}`
+                }
             })
     }else{
         errorCompra("Saldo insuficiente" , "su saldo es menor al total de la compra , cargue saldo")
     }  
-    }
+}
 //¿hay uno o varios?
 const unOrUnos = () =>{
     arrayPusheado.length>1?mostrarAlerta("unos"):mostrarAlerta("un")
 }
-//aca se termian de calcular el total de la compra
-const totalCompra =() =>{
-    divContainerText.innerHTML?unOrUnos():errorCompra("Error al comprar" ,"No se puede calcular el total si el carrito está vacio ")
-}
 //empiezo conla estructura HTML
-//creo los botones vaciar y comprar
 const botonUser = divContainerBottons.innerHTML =`
 <div class="buttonContainer">
-<button id="vaciarCarrito" onclick ="eventoClick()">Vaciar Carrito</button>
-<button class="comprar" onclick="totalCompra()">Comprar</button>
+<button id="vaciarCarrito">Vaciar Carrito</button>
+<button class="comprar">Comprar</button>
 </div>
 `
+newDivCompras.appendChild(divContainerBottons)
+divComprasContainer.appendChild(newDivCompras).style.display = "none"
+//evento comprar
+const compra = document.querySelector(".comprar")
+if(compra){
+    compra.addEventListener("click" , () =>{
+        divContainerText.innerHTML?unOrUnos():errorCompra("Error al comprar" ,"No se puede calcular el total si el carrito está vacio ")
+    })
+}
+//ebvento vaciar
+const vaciado = document.querySelector("#vaciarCarrito");
+if(vaciado){
+    vaciado.addEventListener("click" , () =>{
+        divContainerText.innerHTML != ""?vaciarCarroDefinitivo() ="":errorCompra("Error al vaciar carrito" ,"El carro ya está vacio, ¿para que lo quieres vaciar?")
+    })
+}
 //hago que si el boton es click pase esto
 const dibujarCarro = () =>{
     botton.addEventListener("click" , () =>{
         sectionNFT.style.marginTop = "200px"
-        newDivCompras.appendChild(divContainerBottons)
-        divComprasContainer.appendChild(newDivCompras)
+        divComprasContainer.appendChild(newDivCompras).style.display = "block"
     })
 }
 dibujarCarro()
