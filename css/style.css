@@ -141,6 +141,39 @@ body{
     position: absolute;
     z-index: 1111;
 }
+#envioCampana{
+    border: none;
+    background-color:inherit;
+    outline: none;
+    position: relative;
+}
+.fa-bell{
+    color: #c89900;
+    font-size: 1.6rem;
+}
+.infoBell{
+    position: absolute;
+    right: 0;
+    background-color: rgb(71, 71, 133);
+    color:rgb(105, 105, 12);
+    border: 2px solid rgb(105, 105, 12);
+    border-radius: 5%;
+    display: flex;
+    width: 190px;
+    padding: 2px;
+    font-size: 1.1rem;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+#envioCampana:hover .infoBell{
+    display: block;
+}
+.fa-arrow-right-to-bracket{
+    font-size: 1.8rem;
+    color: rgb(31, 31, 179);
+}
+
 /*footer */
 footer{
     width: 95vw;
@@ -398,7 +431,7 @@ footer .divFooter img{
     width: 80px;
 }
 .conteinerBottom{
-    order: 1;
+   order: 2;
    width: 85%;
    margin: 0px auto;
    justify-self: flex-end;
@@ -444,7 +477,30 @@ footer .divFooter img{
     background-color:green;
     color:white
 }
-
+/*envios */
+.compra{
+    width: 100%;
+    height: 100%;
+    border: 1px outset green;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+.compra h2{
+    font-size: 1.3rem;
+}
+.compra img{
+    width: 70%;
+    height: 35%;
+}
+.compra h2 strong:hover{
+    cursor: pointer;
+    border-bottom: 1px solid rgb(10, 17, 10);
+}
+.compra strong{
+    color: rgb(17, 102, 17);
+}
 /*cotizacion */
 .mainCotizacion{
     background-color: #c89900;

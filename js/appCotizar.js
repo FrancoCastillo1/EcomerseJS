@@ -3,7 +3,6 @@
 const inputUsd =document.querySelector("#inputText");
 const sectionCotizacion = document.querySelector(".conteinerCambio")
 const selectCripto = document.querySelector("#selectCripto");
-const options = document.createElement("option");
 const selecionarCripto = document.querySelector(".divResultadoCotizacion");
 //extraigo la api de cripto
 const resultadoCripto = document.querySelector("button")
@@ -18,7 +17,16 @@ sectionTabla.innerHTML = `
 `
 const divValoresCriptos =document.createElement("DIV");
 divValoresCriptos.className ="divValores"
-/* trCripto.className =  */
+//funcion para ahorar código
+const pintarCripto = (input , op, name , precio , ath , atl , total , volume) =>{
+  selecionarCripto.innerHTML = `<p>Con $US${input} podes comprar ${op} de ${name}</p>
+  <p>Precio actual:${precio}</p>
+  <p>Precio histórico :${ath}</p>
+  <p>Precio minimo histórico:${atl}</p>
+  <p>Monedas en circulación:${total}</p>
+  <p>Volumen:${volume}</p>
+  `
+}
 // creo la funcion donde extraere la informacion de las cripto
 const llamarCripto = async() =>{
   const criptos = {
@@ -32,7 +40,6 @@ const resultado = await fetch('https://coingecko.p.rapidapi.com/coins/markets?vs
 let peticion = await resultado.json()
 //creo las variables de la opeación
 peticion.forEach((moneda) =>{
-  /* console.log(moneda) */
   //agrego cada moneda con el appendChild
   let opcionesSelect = document.createElement("option");
   opcionesSelect.setAttribute("value", `${moneda.current_price}`);
@@ -48,15 +55,17 @@ resultadoCripto.addEventListener("click" , () =>{
   const newArray =  Array.from(peticion)
   /* console.log(newArray) */
   const filterCripto = newArray.find((moneda) => selectCripto.value == moneda.current_price)
-  console.log(filterCripto)
-    selecionarCripto.innerHTML = `<p>Con $US${inputUsd.value} podes comprar ${operacion} de ${filterCripto.name}</p>
-    <p>Precio actual:${filterCripto.current_price}</p>
-    <p>Precio histórico :${filterCripto.ath}</p>
-    <p>Precio minimo histórico:${filterCripto.atl}</p>
-    <p>Monedas en circulación:${filterCripto.total_supply}</p>
-    <p>Volumen:${filterCripto.total_volume}</p>
-    `
-  })
+  let operaciones = {
+    capturar : Number(inputUsd.value),
+    operacionRealizada : operacion,
+  }
+  const guardarStorage = JSON.stringify(filterCripto)
+  const guardarLocal =  JSON.stringify(operaciones)
+  localStorage.setItem("Cripto" , guardarStorage)
+  localStorage.setItem("Resultado" , guardarLocal)
+      pintarCripto(inputUsd.value ,operacion , filterCripto.name ,filterCripto.current_price , filterCripto.ath ,filterCripto.atl , filterCripto.total_supply ,filterCripto.total_volume)
+    })
+
   //creo las filas necesarias paar mostar los datos en la tabla
 divValoresCriptos.innerHTML += `
 <div><img src="${moneda.image}">${moneda.name}</div>
@@ -69,3 +78,12 @@ if(sectionTabla){
 }
 )}
 llamarCripto()
+//extraigo datos del localStorage
+let criptos = localStorage.getItem("Cripto")
+const criptoParse = JSON.parse(criptos)
+let resultado = localStorage.getItem("Resultado")
+const resultadoOp = JSON.parse(resultado)
+  if(criptos !== null && resultado !== null){
+    pintarCripto(resultadoOp.capturar , resultadoOp.operacionRealizada , criptoParse.name , criptoParse.current_price , criptoParse.ath , criptoParse.atl , criptoParse.total_supply , criptoParse.total_volume)
+  inputUsd.value = resultadoOp.capturar
+  }

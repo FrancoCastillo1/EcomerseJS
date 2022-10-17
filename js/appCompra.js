@@ -1,19 +1,25 @@
 //extraigo a los documentos
 const sectionNFT = document.querySelector(".sectionContainer")
 const mainNFT = document.querySelector(".mainCompras")
-//preguntamos el nombre del usuario al ingresar a esta parte de la página, digamos que las otras partes son puramente informativas
-let saldo;
-let nombre;
-let tarjetaUsuario;
 //hago que el nombre y el saldo que ingresó el usuario aparezca en el html
 const nombreDeUsuario = document.querySelector("#usuarioRegistrado");
 const saldoDelUsuario = document.querySelector("#saldo")
+//creo una variable del locla global
+let extraerStorage;
+let saldoDelStorage;
+//creo la funcion para pintrla , porque haora , simple , si lo hago en el ambito de la funcion datos funcion ala primera vez y lo hago fuera funciona todas las veces excepto la primera
+const pintarDatos = () =>{
+    extraerStorage = JSON.parse(localStorage.getItem("Usuario"))
+    saldoDelStorage = JSON.parse(localStorage.getItem("saldoDelUsuario"))
+    nombreDeUsuario.textContent = extraerStorage.nombreUsuario;
+    saldoDelUsuario.textContent = `$US${saldoDelStorage.saldoTarjeta}`
+}
 //hago una funcion donde "registre al usuario" para que pueda rellenar usus datos paar la compra
 const datos = () =>{
     Swal.mixin({
      input : "text",
      confirmButtonText : "Siguiente",
-     progressSteps : ["1" , "2"],
+     progressSteps : ["1" , "2" , "3"],
      showCancelButton:true,
      cancelButtonText : "Cancelar",
      allowEscapeKey:false,
@@ -25,24 +31,37 @@ const datos = () =>{
              text:"El nombre nos asegura que seas vos el que este comprando"
          },
          {
+            title:"Ingrese su domiclio legal",
+            text:"Esta información servirá para cuando le enviemos el pedido"
+        },
+         {
              title:"Ingrese su tarjeta de crédito",
              text:"No compartiremos la información con nadie"
-         },
+         }, 
     ]).then((result) =>{
      if(result.value){
-        tarjetaUsuario =result.value[1] 
-         nombre =result.value[0]
-         saldo = Math.round(Math.random()*10000)
-         if((tarjetaUsuario.length >=14 && tarjetaUsuario.length <=16) &&(nombre != "")){
+       let  nombre =result.value[0]
+       let  direccion = result.value[1]
+       let  tarjetaUsuario =result.value[2] 
+       let  saldo = Math.round(Math.random()*10000)
+         if((tarjetaUsuario.length >=14 && tarjetaUsuario.length <=16) && (nombre != "")){
              Swal.fire({
                  title : "Completado",
                  html:`<p>Gracias ${nombre} , su saldo actual de la tarjeta ${tarjetaUsuario} es de US$${saldo}</p>`,
                  confirmButtonText:"Terminado",
              })
-             localStorage.setItem("Usuario" ,nombre)
-             ejecucionBucle = false
-             nombreDeUsuario.textContent = nombre;
-             saldoDelUsuario.textContent = `$US${saldo}`
+        //hago el localStorage de lo general y saldo(que irá cambiando , por eso lo pongo aparte)
+        let datosObjeto = {
+            nombreUsuario : nombre,
+            direccionUsuario : direccion,
+            tarjetaCredito : tarjetaUsuario,
+        }
+        let saldoObjeto = {saldoTarjeta : saldo}
+          const datos = JSON.stringify(datosObjeto)
+          const dinero = JSON.stringify(saldoObjeto)
+          localStorage.setItem("Usuario" ,datos)
+          localStorage.setItem("saldoDelUsuario" , dinero)
+         pintarDatos()
          }else{
              Swal.fire({
                  title : "Dato de la tarjeta invalido",
@@ -56,10 +75,15 @@ const datos = () =>{
      }
     })
 }
+if(localStorage.getItem("Usuario")){
+    pintarDatos()
+}
 //la función se ejecutará apenas inicie la página
-document.addEventListener("DOMContentLoaded" , () =>{
-datos()
-})
+if((nombreDeUsuario.textContent =="Indefinido" ) && (saldoDelUsuario.textContent == "sin saldo")){
+    document.addEventListener("DOMContentLoaded" , () =>{
+    datos()
+    })
+}
 // creo el array de objetos para el HTML, no lo hago desde fetch ya que ya lo hice con las cripto y aca se me complicaba mucho =/
 const productos =[
     {
@@ -135,9 +159,11 @@ const productos =[
         precio : 300,
     },
 ]
+//creo DIVS para utilizarlos
+const divContainerText = document.createElement("div");
+divContainerText.className ="infoDiv"
 //hago el forEach para dibujar
 let dibujar;
-const buscar = document.querySelector("#buscarCompras");
 const arrayForEach =(dibujo) =>{
    dibujo.forEach((producto) =>{
      sectionNFT.innerHTML += `
@@ -150,48 +176,30 @@ const arrayForEach =(dibujo) =>{
 
    }) 
 }
-//lo llamo desde json
-/* const llamarProductos = async() =>{
-   const resultado = await fetch("./productos.json")
-   const respuesta = await resultado.json()
-    arrayForEach(respuesta)
-}
-llamarProductos() */
 let filter;
  arrayForEach(productos)     
 //filtrado de palabras
- const valorcito =buscar.addEventListener("keyup" , () =>{
+const buscar = document.querySelector("#buscarCompras");
+   buscar.addEventListener("keyup" , (e) =>{
    const busqueda = productos.find((producto)=> buscar.value == producto.nombre)
-    sectionNFT.innerHTML = `
-    <div class ="contenidoNFT">
-    <img src="${busqueda.imagen}" alt="NFT , Hacerse millonario , Cripto">
-    <h2>${busqueda.nombre}</h2>
-    <button class="for for" value ="${busqueda.precio}">Comprar</button>
-     </div>
-     `
-    const newArrayIterable  = document.querySelectorAll(".for")  // ¿por que pongo 2 clases,  bueno , porque el swwtAlert estaba con un forEach , de array y para que me lo reconozca , puse 2)
+   if(busqueda){
+      sectionNFT.innerHTML = `
+       <div class ="contenidoNFT">
+       <img src="${busqueda.imagen}" alt="NFT , Hacerse millonario , Cripto">
+       <h2>${busqueda.nombre}</h2>
+       <button class="for for" value ="${busqueda.precio}">Comprar</button>
+        </div>
+        `
+       const newArrayIterable  = document.querySelectorAll(".for")  // ¿por que pongo 2 clases,  bueno , porque el swwtAlert estaba con un forEach , de array y para que me lo reconozca , puse 2)
     arrayModicar(newArrayIterable)
-    if(buscar.value != busqueda.nombre){
-        arrayForEach(productos)
-    }
-    })
+   }else if(buscar.value ==""){
+    sectionNFT.innerHTML = ""
+    arrayForEach(productos)
+    const newCompras = document.querySelectorAll(".comprarNFT")
+    arrayModicar(newCompras)
+   }
+})
 mainNFT.appendChild(sectionNFT)
-//filtrado por rango
-const newDivRange = document.createElement("DIV");
-const sectionInput = document.querySelector(".sectionInput")
-newDivRange.innerHTML = `<input type="range" name="rango" id="rangoInput" min="0" max="5643" value="0">
-<span class="spanRange">0</span>
-`
-const inputRange = document.querySelector("#rangoInput");
-const spanRange = document.getElementsByClassName("spanRange");
-    if(inputRange){
-        inputRange.addEventListener("input" , () =>{
-            if(spanRange){
-                spanRange.textContent = inputRange.value
-            }
-        })
-    }
-sectionInput.appendChild(newDivRange)
 // hago que el usuario confirme la compra y creo un array para pushear los totales
 let arrayPusheado = []
 const confirmar = document.querySelectorAll(".comprarNFT");
@@ -223,17 +231,37 @@ const errorCompra = (razon , contenido) =>{
         padding : "1rem"
     })
 }
+//funcion de eliminar producto
+const eliminar = (eli) =>{
+    eli.forEach((eliminar) =>{
+     eliminar.addEventListener("click" , () =>{
+         arrayPusheado.splice(eliminar,1)
+         eliminar.parentElement.outerHTML = ""  
+     })
+ })
+}
+//en caso que el usario haya puesto caneclar , podrá volver a llenar sus datos
+const volverAllenar = () =>{
+    const bottonRegistrarse = document.querySelector("#usuarioDatos")
+    if(bottonRegistrarse){
+        bottonRegistrarse.addEventListener("click", () =>{
+            if((nombreDeUsuario.textContent == "Indefinido") && (saldoDelUsuario.textContent == "sin saldo")){
+                datos()
+            }
+        })  
+    }
+}
+volverAllenar()
 //hago la funcion que realize la compra , la hara si el usario rellenó los datos
 const arrayModicar =  (recorrido) =>{
     recorrido.forEach((pendiente) =>{
        pendiente.addEventListener("click" , () =>{
-        if((nombre !== undefined && nombre != "") && (tarjetaUsuario !== undefined && tarjetaUsuario != "")){
+        if((extraerStorage !== undefined)&&(saldoDelStorage!== undefined)){
             const encontrar = productos.find((producto) => producto.nombre == pendiente.previousElementSibling.textContent )
-            console.log(encontrar)
             if(encontrar){
                 Swal.fire({
                     title:  `Compra del ${encontrar.nombre}`,
-                    text: `${nombre} estas a punto de agregar al carrito un NFT valorado en US$ ${encontrar.precio}, precionar Aceptar para agregar al carrito.Recordá que tu saldo es de US$${saldo}`,
+                    text: `${extraerStorage.nombreUsuario} estas a punto de agregar al carrito un NFT valorado en US$ ${encontrar.precio}, precionar Aceptar para agregar al carrito.Recordá que tu saldo es de US$${saldoDelStorage.saldoTarjeta}`,
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonColor: 'green',
@@ -252,10 +280,6 @@ const arrayModicar =  (recorrido) =>{
                             precio : Number(encontrar.precio),
                             imagen : encontrar.imagen
                       })
-                        //lo convierto a JSON
-                        let convertirJson = JSON.stringify(arrayPusheado)
-                        localStorage.setItem("Productos" , convertirJson)
-                        //lo agrego al carrito
                         let ultimo = arrayPusheado[arrayPusheado.length -1]
                         if(ultimo){
                             divContainerText.innerHTML+= `
@@ -263,9 +287,13 @@ const arrayModicar =  (recorrido) =>{
                             <img src="${ultimo.imagen}" alt"img hacerse millonario , bruh">
                             <p>Nombre ${ultimo.nombre}</p>
                             <p>Precio US$${ultimo.precio}</p>
+                            <i class="fa-solid fa-ban"></i>
                             </div>
                             `
                           newDivCompras.appendChild(divContainerText);
+                        //aca elimino el producto
+                            let nodeEliminar = document.querySelectorAll(".fa-ban");
+                            eliminar(nodeEliminar)
                         }
                     }
                 })
@@ -277,35 +305,95 @@ const arrayModicar =  (recorrido) =>{
     })
 }
 arrayModicar(confirmar)
-//en caso que el usario haya puesto caneclar , podrá volver a llenar sus datos
-const volverAllenar = () =>{
-        const bottonRegistrarse = document.querySelector("#usuarioDatos")
-        if(bottonRegistrarse){
-            bottonRegistrarse.addEventListener("click", () =>{
-                if((nombreDeUsuario.textContent != nombre) && (saldoDelUsuario.textContent != saldo)){
-                    datos()
-                }
-            })  
-        }
-}
-volverAllenar()
-//creo DIVS para utilizarlos
-const divContainerText = document.createElement("div");
-divContainerText.className ="infoDiv"
 // creo la funcion para ver en caso quu el usuario desee vaciar el carrito
 const vaciarCarroDefinitivo = () =>{
     divContainerText.innerHTML = ""
     arrayPusheado.splice(0,arrayPusheado.length)
 }
+//creo la funcion donde mostrará los envios 
+let nuevoArray = []
+let arrayPush = []
+const enviosCompra = (nombre , total,  domicilio , regreso) =>{
+    sectionNFT.innerHTML = ""
+    //hago que se pinte los divs que marcaran el envio
+    if(buscar){
+        buscar.style.display = "none"
+    }
+    let regalos = ["regalo.jfif","regalo2.jfif","regalo3.jfif"]
+      regreso.innerHTML = `<i class="fa-solid fa-arrow-right-to-bracket"></i>
+      <div class="infoBell">
+      <p>Presioná aca para volver a comprar</p>
+      </div>
+      `
+      let direccionRandomHora = Math.round(Math.random()*23)
+      let  direccionRandomMinuto = Math.round(Math.random()*60)
+      let horaFinal = `${direccionRandomHora}:${direccionRandomMinuto}`
+      let acceso = regalos[Math.round(Math.random()*3)]
+      let idRandom = Math.round(Math.random()*100000)
+       let Object = {
+            regalos: acceso,
+            idEnvio : idRandom,
+            totalPedido : total
+        } 
+         const guardarInfo = JSON.stringify(Object);
+         localStorage.setItem("Envios" , guardarInfo)
+         const extraer = JSON.parse(localStorage.getItem("Envios"))
+         nuevoArray.push(extraer)
+          let divCompras = document.createElement("DIV");
+          divCompras.className = "compra"
+          let ultimoArray = nuevoArray[nuevoArray.length -1]
+            if(ultimoArray){
+                divCompras.innerHTML += `
+                 <img src="../img/${ultimoArray.regalos}" alt="nft regalos devancoin">
+                 <h2 class="verComprobante">Total de la compra<strong>US$${ultimoArray.totalPedido}</strong></h2>
+                 <p>id del pedido<strong>#${ultimoArray.idEnvio}</strong></p>
+                 <p class="direccionEnvio">El comprobante del pedido llegara a su domicilio ${domicilio} mañana a las ${horaFinal}hrs</p>
+                `
+            }
+            //aca hay algo raro ,cuando appencheo me da el último ,pero cuando lo hago con DivContainerText, se quedan los elementos en el carrito ,pero aca se reemplaza ,sabes porque??
+            sectionNFT.appendChild(divCompras)
+        //comprobante
+        const verComprobate = document.querySelector(".verComprobante")
+        if(verComprobate){
+            verComprobate.addEventListener("click" , () =>{
+                Swal.fire({
+                    title : "TOTAL De la Compra",
+                    html : `<p>El total fue de: ${nombre}</p>`,
+                    icon : "info",
+                    showCancelButton: true,
+                    confirmButtonColor: 'green',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText :"Cancelar",
+                    confirmButtonText: 'Aceptar'
+                })
+            })
+        }
+    //si el usuario desea pedir más NFT
+    regreso.addEventListener("click" , () =>{
+        sectionNFT.innerHTML = ""
+        arrayForEach(productos)
+        const newCompras = document.querySelectorAll(".comprarNFT")
+       arrayModicar(newCompras)
+        regreso.innerHTML = ""
+        if(buscar){
+            buscar.style.display = "block"
+        }
+
+    })
+}
 // creo la funcion que mostrara la alerta del total y validara si hay suficiente saldo
+let total;
+let newForEach;
 const mostrarAlerta= (unos) =>{
-    const newForEach = arrayPusheado.map((pendiente)=>`<br>${pendiente.nombre} con precio de ${pendiente.precio}`)
-    const total =  arrayPusheado.reduce((acumm,item)=>{
+     newForEach = arrayPusheado.map((pendiente)=>`<br>${pendiente.nombre} con precio de ${pendiente.precio}`)
+     total =  arrayPusheado.reduce((acumm,item)=>{
         return acumm + item.precio
     },0)
-    if(saldo >= total){
-      /* const vuelto= saldo - total */
-      saldo= Number(saldo - total)
+    if(saldoDelStorage.saldoTarjeta >= total){
+      saldoDelStorage.saldoTarjeta = Number(saldoDelStorage.saldoTarjeta - total)
+      let newObject = {saldoTarjeta : saldoDelStorage.saldoTarjeta}
+      localStorage.setItem("saldoDelUsuario" , JSON.stringify(newObject))
+      saldoDelStorage = JSON.parse(localStorage.getItem("saldoDelUsuario"))
         Swal.fire({
             title : "TOTAL De la Compra",
             html : `<p>El total de la compra es de ${unos}: ${newForEach}</p>`,
@@ -322,18 +410,30 @@ const mostrarAlerta= (unos) =>{
                     icon : "success",
                       padding : "1rem",
                       title : 'Gracias por Comprar en DevanCoin',
-                      text:  `El total de su compra fue $US${total},le quedan US$${saldo} en su saldo tras realizar la compra,vuelva pronto! `
+                      text:  `El total de su compra fue $US${total},le quedan US$${saldoDelStorage.saldoTarjeta} en su saldo tras realizar la compra,vuelva pronto! `
                     }
                     )
                     arrayPusheado.splice(0,arrayPusheado.length)
                     divContainerText.innerHTML = ""
-                    saldoDelUsuario.textContent = `$US${saldo}`
+                    saldoDelUsuario.textContent = `$US${saldoDelStorage.saldoTarjeta}`
+                    //agrego los comprobantes
+                    const buttonBell = document.querySelector("#envioCampana")
+                    buttonBell.innerHTML =`<i class="fa-solid fa-bell"></i>
+                    <div class="infoBell">
+                    <p>Presiona la campana para poder ver el envio de la compra</p>
+                    </div>
+                    `
+                    buttonBell.addEventListener("click" , () =>{
+                        enviosCompra(newForEach , total , extraerStorage.direccionUsuario , buttonBell)
+                        })
                 }
             })
+    
     }else{
         errorCompra("Saldo insuficiente" , "su saldo es menor al total de la compra , cargue saldo")
     }  
 }
+//confirmo su existencia para acceder luego
 //¿hay uno o varios?
 const unOrUnos = () =>{
     arrayPusheado.length>1?mostrarAlerta("unos"):mostrarAlerta("un")
